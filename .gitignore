@@ -1,35 +1,42 @@
-node_modules
-dist
-.DS_Store
-server/public
-vite.config.ts.*
-*.tar.gz
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
 
 # Next.js
-.next/
-out/
+/.next/
+/out/
 
-# Environment files
-.env*.local
-.env
-.env.development
-.env.test
-.env.production
+# Production
+/build
 
-# Debug logs
+# Misc
+.DS_Store
+*.pem
+
+# Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+
+# Local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Vercel
 .vercel
+
+# Turbo
 .turbo
 
-# Build files
-build
+# Typescript
 *.tsbuildinfo
 
-# Coverage directories
-coverage
-.nyc_output
+# Temp files
+layout_base64
+page_base64
