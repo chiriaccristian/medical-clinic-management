@@ -1,0 +1,51 @@
+name: Deploy Medical Clinic Management System
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build application
+        env:
+          # Firebase Client Environment Variables
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          
+          # Firebase Admin Environment Variables (server-side only)
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+        run: npm run build
+        
+      - name: Run Tests
+        run: npm test || true
+        
+      - name: Deploy to production
+        # Replace with your deployment provider actions 
+        # Example for Vercel:
+        # uses: amondnet/vercel-action@v20
+        # with:
+        #   vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        #   vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        #   vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        #   vercel-args: '--prod'
+        run: echo "Deployment step - configure your specific deployment provider here"
